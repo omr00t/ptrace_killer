@@ -46,7 +46,7 @@ static void kill_task(struct task_struct* task){
 }
 
 /*
- * Returns 1 in case the process has any tracees
+ * Returns 1 in case the process has any tracees.
  **/
 static int is_a_tracer(struct list_head* ptraced_children){
 	struct task_struct* task;
@@ -60,7 +60,7 @@ static int is_a_tracer(struct list_head* ptraced_children){
 }
 
 /*
- * Takes a linked-list of the ptraced proccesses and loops through them & finally kills
+ * Takes a linked-list of the ptraced proccesses, loops through them & finally kills
  * them.
  **/
 static void kill_tracee(struct list_head* ptraced_children){
@@ -96,7 +96,7 @@ static void ptrace_checker(void){
 			 */
 			kill_task(task);
 			pr_info("Tracer's been killed.\n");
-			pr_info("=====================================================\n"); // Separater
+			pr_info("=====================================================\n"); // Separator
 		}
 	}
 }
