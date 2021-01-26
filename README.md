@@ -48,6 +48,19 @@ Reading symbols from /tmp/test2...
 (No debugging symbols found in /tmp/test2)
 Killed
 ```
+* You can check the module's log through `dmesg`:
+```
+~$ dmesg
+...
+ptrace_killer: Loaded!                             
+ptrace_killer: ptracer -> comm: gdb     pid: 27960
+                          tgid: 27960   ptrace: 0 
+ptrace_killer: ptracee -> comm: test2   pid: 27931
+                          tgid: 27931   ptrace: 1 
+ptrace_killer: All tracees have been killed.       
+ptrace_killer: Tracer's been killed.               
+...
+```
 * As soon as gdb tried to "ptrace" the target process, gdb's got killed in addition to its tracee(s), of course.
 * A gif showing the process:
 * ![ptrace_killer](gif/ptrace_killer.gif)
