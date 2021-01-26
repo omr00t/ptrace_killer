@@ -7,8 +7,8 @@ A simple Linux LKM (Loadable Kernel Module) that detects any process that's util
 * Once a tracer is found, the module lists all its tracees and sends a `SIGKILL` signal to each of them including the tracer. This results in killing both the tracer and its tracees.
 * Once the module is attached to the kernel, the module's "core" function will run periodically through the advantage of workqueues. Specifically, the module runs every `JIFFIES_DELAY`, which is set to 1. That is, the module will run every one [jiffy](https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/4041820a-bbe4-4502-8ef9-d1913e133332.xhtml). This can be changed through modifying the macro `JIFFIES_DELAY` defined in the module.
 # Testing the module:
-* First, you should make sure that GCC and kernel headers are already installed 
-* debian-based distributions:
+* First, you should make sure that GCC and kernel headers are already installed:
+* Debian-based distributions:
 ```
 ~$ sudo apt-get install build-essential linux-headers-$(uname -r)
 ```
