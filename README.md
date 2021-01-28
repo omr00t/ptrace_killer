@@ -10,24 +10,30 @@ A simple Linux LKM (Loadable Kernel Module) that detects any process that's util
 * First, you should make sure that GCC and kernel headers are already installed:
 * Debian-based distributions:
 ```
-~$ sudo apt-get install build-essential linux-headers-$(uname -r)
+$ sudo apt-get install build-essential linux-headers-$(uname -r)
 ```
 * Clone the repo:
 ```
-~$ git clone https://github.com/omr00t/ptrace_killer
+$ git clone https://github.com/omr00t/ptrace_killer
 ```
 * Compile the module:
 ```
-~$ cd ptrace_killer && make
+$ cd ptrace_killer && make
 ```
-* If everything went all right, the module would be compiled into `.ko` file.
+* If everything went all right, the module would be compiled into a `.ko` file.
 * The module can be loaded through:
 ```
-~$ sudo insmod ptrace_killer.ko
+$ sudo insmod ptrace_killer.ko            # Module is enabled by default once it's loaded.
+$ sudo insmod ptrace_killer.ko enabled=0  # Load the module as disabled. Must be manually enabled. See below. 
+```
+* Disable/Enable the module:
+```
+$ echo -n "1" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Enable the module.
+$ echo -n "0" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Disable the module.
 ```
 * You can test the module through trying to debug a binary file with any debugger (gdb for example):
 ```
-~$ gdb --pid=27931
+$ gdb --pid=27931
 GNU gdb (Ubuntu 9.1-0ubuntu1) 9.1
 Copyright (C) 2020 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
@@ -50,7 +56,7 @@ Killed
 ```
 * You can check the module's log through `dmesg`:
 ```
-~$ dmesg
+$ dmesg
 ...
 ptrace_killer: Loaded!                             
 ptrace_killer: ptracer -> comm: gdb     pid: 27960
@@ -64,13 +70,8 @@ ptrace_killer: Tracer's been killed.
 * As soon as gdb tried to "ptrace" the target process, gdb's got killed in addition to its tracee(s), of course.
 * A gif showing the process:
 * ![ptrace_killer](gif/ptrace_killer.gif)
-* Disable/Enable the module:
-```
-~$ echo -n "0" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Disable the module.
-~$ echo -n "1" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Enable the module.
-```
 * Remove the module from the kernel entirely:
 ```
-~$ sudo rmmod ptrace_killer
+$ sudo rmmod ptrace_killer
 ```
 # Tested on Kernel v5.10.4
