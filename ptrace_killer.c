@@ -27,7 +27,7 @@ static int loaded;
  * 0 : unloaded.
  **/
 
-static int enabled;
+static int enabled = 1;
 /* 
  * enabled:
  * 1 : enabled.
@@ -35,6 +35,7 @@ static int enabled;
  *
  * module_param :
  *            can be read and written by root only.
+ * Defaults to enabled unless specified by the module parameter when loaded.
  **/
 module_param(enabled, int, S_IWUSR | S_IRUSR);
 
@@ -112,7 +113,7 @@ static void ptrace_checker(void){
  * 100 HZ is 0.01 second.
  **/
 static void intrpt_routine(struct work_struct* _){
-	if(enabled)
+	if(loaded && enabled)
 		ptrace_checker();
 	queue_delayed_work(ptracekill_workqueue, &ptracekill_task, JIFFIES_DELAY);
 }
@@ -123,7 +124,7 @@ static void intrpt_routine(struct work_struct* _){
 static int __init lkm_init(void) {
 	ptracekill_workqueue = create_workqueue(PTRACE_KILLER_QUEUE_NAME);
 	queue_delayed_work(ptracekill_workqueue, &ptracekill_task, JIFFIES_DELAY);
-	loaded = enabled = 1;
+	loaded = 1;
 	pr_info("Loaded!\n");
 	return 0;
 }
