@@ -26,7 +26,7 @@ $ cd ptrace_killer && make
 $ sudo insmod ptrace_killer.ko            # Module is enabled by default once it's loaded.
 $ sudo insmod ptrace_killer.ko enabled=0  # Load the module as disabled. Must be manually enabled. See below. 
 ```
-* Disable/Enable the module:
+* Enable/Disable the module:
 ```
 $ echo -n "1" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Enable the module.
 $ echo -n "0" | sudo tee /sys/module/ptrace_killer/parameters/enabled  # Disable the module.
