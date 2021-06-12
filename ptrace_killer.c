@@ -1,6 +1,6 @@
 /*
  * Author: Joseph Alhajri
- * License: GPL v3
+ * License: BSD-2-Clause
  * omroot.io
  * Tested on Kernel v5.10.4
  **/ 
@@ -146,5 +146,5 @@ module_init(lkm_init);
 module_exit(lkm_exit);
 
 MODULE_AUTHOR("Joseph Alhajri");
-MODULE_LICENSE("GPL");
+MODULE_LICENSE("Dual BSD/GPL");
 MODULE_DESCRIPTION("A simple linux kernel module that kills ptrace tracer and its tracees.");
